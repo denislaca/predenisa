@@ -1,6 +1,10 @@
 let initialState = {
   user: 'mikx',
   room: 'hello',
+  roomData: [
+    {user: 'mikx', text: 'hello everyone',},
+    {user: 'someone', text: 'hi!',},
+  ],
 }
 
 const mainReducer = (state = initialState, action) => {

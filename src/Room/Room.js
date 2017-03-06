@@ -3,16 +3,25 @@ import { connect } from 'react-redux'
 import { View, Text, StyleSheet } from 'react-native'
 
 import RoomHeader from './RoomHeader'
+import RoomContent from './RoomContent'
 
 const Room = ({user, room}) => (
-	<RoomHeader
-		user={user}
-		room={room}
-	/>
+	<View style={styles.room}>
+		<RoomHeader
+			user={user}
+			room={room}
+		/>
+		<RoomContent
+			user={user}
+			room={room}
+		/>
+	</View>
 )
 
 const styles = StyleSheet.create({
-	
+	room: {
+		flex: 1,
+	}
 })
 
 export default connect((state) => ({

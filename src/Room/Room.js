@@ -4,6 +4,7 @@ import { View, Text, StyleSheet } from 'react-native'
 
 import RoomHeader from './RoomHeader'
 import RoomContent from './RoomContent'
+import RoomFooter from './RoomFooter'
 
 const Room = ({user, room}) => (
 	<View style={styles.room}>
@@ -12,6 +13,10 @@ const Room = ({user, room}) => (
 			room={room}
 		/>
 		<RoomContent
+			user={user}
+			room={room}
+		/>
+		<RoomFooter
 			user={user}
 			room={room}
 		/>

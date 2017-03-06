@@ -1,26 +1,28 @@
+import moment from 'moment'
+
 let initialState = {
   user: 'mikx',
   room: 'hello',
   roomData: [
-    {user: 'mikx', text: 'hello everyone',},
-    {user: 'someone', text: 'hi!',},
-    {user: 'someone2', text: 'hi2!',},
-    {user: 'someone3', text: 'hi3!',},
-    {user: 'someone4', text: 'hi4!',},
-    {user: 'someone4', text: 'hi4!',},
-    {user: 'someone4', text: 'hi4!',},
-    {user: 'someone4', text: 'hi4!',},
-    {user: 'someone4', text: 'hi4!',},
-    {user: 'someone4', text: 'hi4!',},
-    {user: 'someone4', text: 'hi4!',},
+    {user: 'mikx', text: 'hello everyone', time: moment().subtract(7, 'days')},
   ],
 }
 
 const mainReducer = (state = initialState, action) => {
-  switch (action.type) {
-    default:
-      return state
-  }
+	switch (action.type) {
+		case "SEND_MESSAGE":
+			return {
+				...state,
+				roomData: state.roomData.concat({
+					user: action.user,
+					text: action.text,
+					time: moment()
+				}),
+			}
+
+		default:
+			return state
+	}
 }
 
 export default mainReducer

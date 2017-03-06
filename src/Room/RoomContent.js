@@ -1,10 +1,32 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, ListView, StyleSheet } from 'react-native'
 
 import RoomHeader from './RoomHeader'
 
 class RoomContent extends Component {
+	constructor() {
+		super()
+		
+		this.state = {
+			dataSource: null,
+		}
+	}
+
+	componentWillMount() {
+		let { data } = this.props
+
+		const ds = new ListView.DataSource({
+			rowHasChanged: (r1, r2) => {
+				return r1.user !== r2.user || r1.text !== r2.text
+			}
+		})
+
+		this.setState({
+			dataSource: ds.cloneWithRows(data),
+		})
+	}
+
 	renderRow(row, index) {
 		return (
 			<View style={styles.rowContainer} key={index}>
@@ -26,11 +48,11 @@ class RoomContent extends Component {
 		let { data } = this.props
 
 		return (
-			<View style={styles.roomContentContainer}>
-				{
-					data.map((row, index) => this.renderRow(row, index))
-				}
-			</View>
+			<ListView
+				style={styles.roomContentContainer}
+				dataSource={this.state.dataSource}
+				renderRow={(row, index) => this.renderRow(row, index)}
+			/>
 		)
 	}
 }

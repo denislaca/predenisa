@@ -1,9 +1,11 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { View, Text, ListView, StyleSheet } from 'react-native'
 import moment from 'moment'
 
 import RoomHeader from './RoomHeader'
+import * as allActions from '../common/actions'
 
 class RoomContent extends Component {
 	constructor() {
@@ -20,10 +22,11 @@ class RoomContent extends Component {
 		}
 	}
 
-	componentWillMount(nextProps) {
-		this.setState({
-			dataSource: this.ds.cloneWithRows(this.props.data),
-		})
+	componentDidMount() {
+		const { room, actions } = this.props
+
+		// actions.getRoomData(room)
+		actions.watchRoomMessages(room)
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -59,6 +62,7 @@ class RoomContent extends Component {
 			<ListView
 				style={styles.roomContentContainer}
 				dataSource={this.state.dataSource}
+				enableEmptySections={true}
 				renderRow={(row, index) => this.renderRow(row, index)}
 			/>
 		)
@@ -106,10 +110,15 @@ RoomContent.propTypes = {
 	data: PropTypes.arrayOf(PropTypes.shape({
 		user: PropTypes.string.isRequired,
 		text: PropTypes.string.isRequired,
-		time: PropTypes.object.isRequired,
-	})).isRequired,
+		time: PropTypes.string.isRequired,
+	})),
 }
 
-export default connect((state) => ({
-	data: state.roomData,
-}))(RoomContent)
+export default connect(
+	state => ({
+		data: state.roomData,
+	}),
+	dispatch => ({
+		actions: bindActionCreators(allActions, dispatch)
+	})
+)(RoomContent)

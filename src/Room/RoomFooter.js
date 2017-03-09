@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native'
 
 import RoomHeader from './RoomHeader'
-import * as allActions from '../store/actions'
+import * as allActions from '../common/actions'
 
 class RoomFooter extends Component {
 	
@@ -25,7 +25,7 @@ class RoomFooter extends Component {
 	handleSendMessage() {
 		let { user, room, actions } = this.props
 
-		actions.sendMessage(user, this.state.text)
+		actions.sendMessage(user, room, this.state.text)
 
 		this.setState({
 			text: '',
@@ -84,4 +84,5 @@ export default connect(
 	null,
 	dispatch => ({
 		actions: bindActionCreators(allActions, dispatch)
-}))(RoomFooter)
+	})
+)(RoomFooter)

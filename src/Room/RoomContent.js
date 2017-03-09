@@ -35,17 +35,21 @@ class RoomContent extends Component {
 		})
 	}
 
-	renderRow(row, index) {
+	renderRow(row, s, index) {
+		const showName = !parseInt(index) || this.props.data[index-1].user !== row.user
+
 		return (
 			<View style={styles.rowContainer} key={index}>
-				<View style={styles.nameContainer}>
-					<Text style={styles.name}>
-						{row.user}
-					</Text>
-					<Text style={styles.date}>
-						{moment(row.time).format("YYYY-MM-DD HH:mm")}
-					</Text>
-				</View>
+				{
+					showName && <View style={styles.nameContainer}>
+						<Text style={styles.name}>
+							{row.user}
+						</Text>
+						<Text style={styles.date}>
+							{moment(row.time).format("YYYY-MM-DD HH:mm")}
+						</Text>
+					</View>
+				}
 				<View style={styles.textContainer}>
 					<Text style={styles.text}>
 						{row.text}
@@ -63,7 +67,7 @@ class RoomContent extends Component {
 				style={styles.roomContentContainer}
 				dataSource={this.state.dataSource}
 				enableEmptySections={true}
-				renderRow={(row, index) => this.renderRow(row, index)}
+				renderRow={(row, s, index) => this.renderRow(row, s, index)}
 			/>
 		)
 	}

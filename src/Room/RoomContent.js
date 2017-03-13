@@ -23,11 +23,10 @@ class RoomContent extends Component {
 	}
 
 	componentDidMount() {
-		const { room, actions } = this.props
-
-		// actions.getRoomData(room)
-		actions.watchRoomMessages(room)
-	}
+		this.setState({
+			dataSource: this.ds.cloneWithRows(this.props.data),
+		})
+	}	
 
 	componentWillReceiveProps(nextProps) {
 		this.setState({
@@ -60,8 +59,6 @@ class RoomContent extends Component {
 	}
 
 	render() {
-		let { data } = this.props
-
 		return (
 			<ListView
 				style={styles.roomContentContainer}
@@ -120,7 +117,7 @@ RoomContent.propTypes = {
 
 export default connect(
 	state => ({
-		data: state.roomData,
+		data: Object.values(state.data[state.room]),
 	}),
 	dispatch => ({
 		actions: bindActionCreators(allActions, dispatch)

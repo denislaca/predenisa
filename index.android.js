@@ -9,6 +9,7 @@ import createLogger from 'redux-logger'
 
 import rootReducer, { initialState } from './src/common/reducer'
 import RoomSelector from './src/Selectors/RoomSelector'
+import UserSelector from './src/Selectors/UserSelector'
 import Room from './src/Room/Room'
 
 const logger = createLogger()
@@ -18,6 +19,7 @@ const store = createStore(rootReducer,
 
 const Scenes = Actions.create(
 	<Scene key='root'>
+		<Scene key='userSelector' component={UserSelector} title='Your user name' />
 		<Scene key='roomSelector' component={RoomSelector} title='Select Room' />
 		<Scene key='room' component={Room} hideNavBar={true} title='Room' />
 	</Scene>

@@ -3,11 +3,10 @@ import { connect } from 'react-redux'
 import { Actions } from 'react-native-router-flux'
 import { bindActionCreators } from 'redux'
 import { View, Text, ListView, TouchableHighlight, StyleSheet } from 'react-native'
-import moment from 'moment'
 
 import * as allActions from '../common/actions'
 
-class RoomContent extends Component {
+class RoomSelector extends Component {
 	constructor() {
 		super()
 		
@@ -86,7 +85,7 @@ const styles = StyleSheet.create({
 	},
 })
 
-RoomContent.propTypes = {
+RoomSelector.propTypes = {
 	data: PropTypes.array.isRequired,
 }
 
@@ -97,4 +96,4 @@ export default connect(
 	dispatch => ({
 		actions: bindActionCreators(allActions, dispatch)
 	})
-)(RoomContent)
+)(RoomSelector)

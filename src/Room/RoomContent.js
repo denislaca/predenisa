@@ -36,20 +36,30 @@ class RoomContent extends Component {
 
 	renderRow(row, s, index) {
 		const showName = !parseInt(index) || this.props.data[index-1].user !== row.user
+		const showReversed = this.props.user === row.user
 
 		return (
 			<View style={styles.rowContainer} key={index}>
 				{
-					showName && <View style={styles.nameContainer}>
-						<Text style={styles.name}>
-							{row.user}
-						</Text>
-						<Text style={styles.date}>
-							{moment(row.time).format("YYYY-MM-DD HH:mm")}
-						</Text>
-					</View>
+					showName && (showReversed
+						? <View style={styles.nameContainerReversed}>
+							<Text style={styles.date}>
+								{moment(row.time).format("YYYY-MM-DD HH:mm")}
+							</Text>
+							<Text style={styles.name}>
+								me
+							</Text>
+						</View>
+						: <View style={styles.nameContainer}>
+							<Text style={styles.name}>
+								{row.user}
+							</Text>
+							<Text style={styles.date}>
+								{moment(row.time).format("YYYY-MM-DD HH:mm")}
+							</Text>
+						</View>)
 				}
-				<View style={styles.textContainer}>
+				<View style={showReversed ? styles.textContainerReversed : styles.textContainer}>
 					<Text style={styles.text}>
 						{row.text}
 					</Text>
@@ -85,6 +95,12 @@ const styles = StyleSheet.create({
 		justifyContent: 'flex-start',
 		alignItems: 'center',
 	},
+	nameContainerReversed: {
+		flex: 1,
+		flexDirection: 'row',
+		justifyContent: 'flex-end',
+		alignItems: 'center',
+	},
 	name: {
 		fontSize: 20,
 		fontStyle: 'italic',
@@ -96,6 +112,11 @@ const styles = StyleSheet.create({
 		padding: 15,
 	},
 	textContainer: {
+		flex: 1,
+		flexDirection: 'row',
+		justifyContent: 'flex-start',
+	},
+	textContainerReversed: {
 		flex: 1,
 		flexDirection: 'row',
 		justifyContent: 'flex-end',

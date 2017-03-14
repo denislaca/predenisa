@@ -1,12 +1,12 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { Actions } from 'react-native-router-flux'
 import { bindActionCreators } from 'redux'
-import { View, Button, TextInput, StyleSheet } from 'react-native'
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native'
 
 import * as allActions from '../common/actions'
 
-class UserSelector extends Component {
+class RoomSelectorFooter extends Component {
+	
 	constructor() {
 		super()
 
@@ -21,20 +21,26 @@ class UserSelector extends Component {
 		})
 	}
 
-	handleSendMessage() {
+	handleSubmit() {
 		let { actions } = this.props
 
-		actions.changeUser(this.state.text)
-		Actions.roomSelector()
+		actions.addRoom(this.state.text)
+
+		this.setState({
+			text: '',
+		})
 	}
 
 	render() {
 		return (
-			<View style={styles.container}>
+			<View style={styles.footerContainer}>
+				<Text style={styles.newRoom}>
+					Create a new room
+				</Text>
 				<View style={styles.inputContainer}>
 					<TextInput
 						style={styles.input}
-						placeholder='type in your user name'
+						placeholder='type in the name'
 						onChangeText={(text) => this.handleTextChange(text)}
 						value={this.state.text}
 					/>
@@ -42,8 +48,8 @@ class UserSelector extends Component {
 				<View style={styles.buttonContainer}>
 					<Button
 						style={styles.button}
-						title='Log in'
-						onPress={() => this.handleSendMessage()}
+						title='Create'
+						onPress={() => this.handleSubmit()}
 					/>
 				</View>
 			</View>
@@ -52,34 +58,29 @@ class UserSelector extends Component {
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		flexDirection: 'row',
-		alignItems: 'center',
-		justifyContent: 'center',
-		paddingTop: 50,
+	footerContainer: {
+
 	},
-	name: {
-		fontSize: 20,
-		fontStyle: 'italic',
-		color: 'gray',
+	inputContainer: {
+
 	},
 	input: {
 		padding: 10,
 		textAlign: 'center'
 	},
-	inputContainer: {
-		flex: 2,
-	},
 	buttonContainer: {
-		flex: 1,
+
 	},
 	button: {
 
 	},
+	newRoom: {
+		textAlign: 'center',
+		fontSize: 25,
+	},
 })
 
-UserSelector.propTypes = {
+RoomSelectorFooter.propTypes = {
 	actions: PropTypes.object.isRequired,
 }
 
@@ -88,4 +89,4 @@ export default connect(
 	dispatch => ({
 		actions: bindActionCreators(allActions, dispatch)
 	})
-)(UserSelector)
+)(RoomSelectorFooter)

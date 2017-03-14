@@ -117,7 +117,7 @@ RoomContent.propTypes = {
 
 export default connect(
 	state => ({
-		data: Object.values(state.data[state.room]),
+		data: Object.values(state.data[state.room]).filter((value) => value !== 'NEKONECNE NEZMYSELNY OFFTOPIC KTORY NEDAVA ZMYSEL!@#'),
 	}),
 	dispatch => ({
 		actions: bindActionCreators(allActions, dispatch)

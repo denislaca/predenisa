@@ -64,6 +64,8 @@ export const sendMessage = (user, room, text) => dispatch => {
 		time: moment().toISOString(),
 	})
 	.then(() => {
+		database.ref(`/rooms/${room}/`).child('first message').remove()
+
 		dispatch({
 			type: "SEND_MESSAGE_SUCCESS",
 		})
@@ -72,6 +74,25 @@ export const sendMessage = (user, room, text) => dispatch => {
 		console.log(error)
 		dispatch({
 			type: "SEND_MESSAGE_FAILURE",
+		})
+	})
+}
+
+export const addRoom = (room) => dispatch => {
+	dispatch({
+		type: "ADD_ROOM_REQUEST",
+	})
+
+	database.ref('/rooms/').child(room).set({'first message': 'NEKONECNE NEZMYSELNY OFFTOPIC KTORY NEDAVA ZMYSEL!@#'})
+	.then(() => {
+		dispatch({
+			type: "ADD_ROOM_SUCCESS",
+		})
+	})
+	.catch(error => {
+		console.log(error)
+		dispatch({
+			type: "ADD_ROOM_FAILURE",
 		})
 	})
 }
